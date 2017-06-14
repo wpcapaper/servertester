@@ -17,6 +17,10 @@ apply plugin: 'org.springframework.boot'
 version = '1.0.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
+ext {
+	guavaVersion = '22.0'
+}
+
 repositories {
 	mavenCentral()
 }
@@ -25,6 +29,7 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-aop')
 	compile('org.springframework.boot:spring-boot-starter-web')
+    compile("com.google.guava:guava:$guavaVersion")
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compileOnly('org.springframework.boot:spring-boot-configuration-processor')
 	compileOnly('org.projectlombok:lombok')

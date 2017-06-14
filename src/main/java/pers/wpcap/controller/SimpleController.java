@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import pers.wpcap.aop.RateLimit;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,7 @@ public class SimpleController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleController.class);
 
     @RequestMapping(value = "/tester", method = RequestMethod.GET)
+    @RateLimit(value = 1)
     public String simpleTester(HttpServletRequest request) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
