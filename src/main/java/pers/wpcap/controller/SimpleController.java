@@ -30,6 +30,11 @@ public class SimpleController {
         return format.format(date);
     }
 
+    /**
+     * XFF not empty, get first effective;if cannot get, get XRI;if XRI empty, getRemoteAddr.
+     * @param request http request
+     * @return client ip
+     */
     private String getClientFromRequest(HttpServletRequest request) {
         try {
             String remoteAddress = request.getHeader("X-Forwarded-For");
