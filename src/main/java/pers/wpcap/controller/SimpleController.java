@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
+
+import org.w3c.dom.html.HTMLParagraphElement;
 import pers.wpcap.aop.RateLimit;
 import pers.wpcap.request.EchoRequest;
 import pers.wpcap.utils.ClientUtils;
@@ -36,8 +38,8 @@ public class SimpleController {
     }
 
     @RequestMapping(value = "/echo")
-    public String echo(@RequestBody EchoRequest request) {
-        return "value = " + request.getCamelCase().toString();
+    public String echo(@RequestBody EchoRequest echoRequest) {
+        return "value = " + echoRequest.getCamelCase().toString();
     }
 
 }
