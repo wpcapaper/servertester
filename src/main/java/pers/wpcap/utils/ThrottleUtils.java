@@ -16,6 +16,8 @@ import redis.clients.jedis.Transaction;
 @Component
 public class ThrottleUtils {
 
+    private static final String TOKEN = "*";
+
     @Autowired
     private JedisPool jedisPool;
 
@@ -32,11 +34,11 @@ public class ThrottleUtils {
 
         if (!jedis.exists(key)) {
             Transaction transaction = jedis.multi();
-            transaction.rpush(key, "*");
+            transaction.rpush(key, TOKEN);
             transaction.expire(key, expire);
             transaction.exec();
         } else {
-            jedis.rpushx(key,"*");
+            jedis.rpushx(key,TOKEN);
         }
 
         jedis.close();
