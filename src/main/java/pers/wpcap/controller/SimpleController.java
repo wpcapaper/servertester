@@ -38,7 +38,7 @@ public class SimpleController {
     }
 
     @RequestMapping(value = "/echo")
-    public String echo(@RequestBody EchoRequest echoRequest) {
+    public String echo(HttpServletRequest request, @RequestBody EchoRequest echoRequest) {
         return "value = " + echoRequest.getCamelCase().toString();
     }
 
