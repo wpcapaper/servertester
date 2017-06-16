@@ -26,6 +26,7 @@ public class ThrottleUtils {
         long current = jedis.llen(key);
 
         if (current >= limit) {
+            jedis.close();
             throw new FilterException("too many your requests. try again later.");
         }
 

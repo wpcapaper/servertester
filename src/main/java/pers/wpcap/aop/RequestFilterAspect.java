@@ -48,7 +48,7 @@ public class RequestFilterAspect {
 
         LOGGER.info("request body:{}", request.getCamelCase());
 
-        throttleUtils.throtteByLimit(ip, (long) 2, 60);
+        throttleUtils.throtteByLimit(ip, (long) 2, 2);
 
     }
 }
