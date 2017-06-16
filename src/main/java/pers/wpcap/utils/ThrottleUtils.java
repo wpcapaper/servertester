@@ -2,6 +2,7 @@ package pers.wpcap.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pers.wpcap.exception.FilterException;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Transaction;
@@ -25,7 +26,7 @@ public class ThrottleUtils {
         long current = jedis.llen(key);
 
         if (current >= limit) {
-            throw new Exception("too many your requests. try again later.");
+            throw new FilterException("too many your requests. try again later.");
         }
 
         if (!jedis.exists(key)) {
