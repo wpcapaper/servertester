@@ -38,6 +38,7 @@ public class SimpleController {
     }
 
     @RequestMapping(value = "/echo")
+    @RateLimit(value = 3)
     public String echo(HttpServletRequest request, @RequestBody EchoRequest echoRequest) {
         return "value = " + echoRequest.getCamelCase().toString();
     }

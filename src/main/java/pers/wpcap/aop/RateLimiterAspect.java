@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pers.wpcap.exception.FilterException;
 import pers.wpcap.helper.JoinPointToStringHelper;
 
 import java.util.Map;
@@ -45,12 +46,16 @@ public class RateLimiterAspect {
     }
 
     @Before("@annotation(limit)")
-    public void rateLimit(JoinPoint joinPoint, RateLimit limit) {
+    public void rateLimit(JoinPoint joinPoint, RateLimit limit) throws Exception {
         String key = createKey(joinPoint, limit);
         RateLimiter rateLimiter = limiters.computeIfAbsent(key, createLimiter(limit));
-        double delay = rateLimiter.acquire();
-        LOGGER.info("Acquired rate limit permission ({} qps) for {} in {} seconds",
-                rateLimiter.getRate(), key, delay);
+        boolean acquired = rateLimiter.tryAcquire();
+        if (acquired) {
+            LOGGER.info("Acquired rate limit permission ({} qps) for {}",
+                    rateLimiter.getRate(), key);
+        } else {
+            throw new FilterException("qps exceeded, try after 1 sec");
+        }
     }
 
     private Function<String, RateLimiter> createLimiter(RateLimit limit) {
